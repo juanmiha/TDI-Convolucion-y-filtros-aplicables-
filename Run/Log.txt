@@ -19447,3 +19447,4 @@ TDI E (c_matrix,  246) Index out of matrix boundaries
 TDI E (c_matrix,  246) Index out of matrix boundaries
 TDI E (c_matrix,  246) Index out of matrix boundaries
 TDI E (c_matrix,  246) Index out of matrix boundaries
+TDI E (c_image_bmp,  238) Matrix not suitable for BMP write

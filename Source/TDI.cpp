@@ -24,6 +24,11 @@ void matrizFiltroSobelX();
 void matrizFiltroSobelY();
 void matrizFiltroPrewittY();
 void matrizFiltroPrewittX();
+// por desarrollar
+//void matrizMediaPonderada();
+//void matrizFiltroGausiano7x7();
+//void matrizFiltroLaplaciano7x7();
+
 
 int main(int argc, char **argv)
 {
@@ -145,7 +150,9 @@ int main(int argc, char **argv)
 
 	//Reajuste de valores menores de 0 o mayores de 255 para que estén dentro del rango (0,255):
 	ReajusteValores();
-	
+	//Reajuste de los valore para no perder informacion cuando existan pixeles negativos
+
+
 	//Escritura de la imagen de salida:
 	char nombreImagenSalida[80] = "";
 	strcat(nombreImagenSalida, nombreSinFormato);
@@ -206,13 +213,12 @@ int CalcularValorPixel(int x, int y, int i, int j, C_Matrix matrizConvolucion) {
 }
 
 void ReajusteValores() {
+	double limiteInferior = imagenSalida.Min();
+	double limiteSuperior = imagenSalida.Max();
 
 	for (int x = imagenSalida.FirstRow(); x <= imagenSalida.LastRow(); x++) {
 		for (int y = imagenSalida.FirstCol(); y <= imagenSalida.LastCol(); y++) {
-			if (imagenSalida(x, y) < 0)
-				imagenSalida(x, y) = 0;
-			else if (imagenSalida(x, y) > 255)
-				imagenSalida(x, y) = 255;
+			imagenSalida(x, y) =((imagenSalida(x,y)*limiteInferior)/0)+((imagenSalida(x, y)*limiteSuperior)/255) ;
 		}
 	}
 }
@@ -263,7 +269,7 @@ void matrizFiltroPasoAlto3x3() {
 }
 
 void matrizFiltroPasoAlto5x5() {
-	C_Matrix kernel(0, 4, 0, 0, -1);
+	C_Matrix kernel(0, 4, 0, 4, -1);
 	// ___________________
 	//|-1_|-1_|-1_|-1_|-1_|
 	//|-1_|-1_|-1_|-1_|-1_|
